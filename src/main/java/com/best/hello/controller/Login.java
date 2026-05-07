@@ -39,15 +39,26 @@ public class Login {
             return "login";
         }
 
+        String loginUser = null;
+
+        // ✅ admin 登录
         if (user.equals(username) && pass.equals(password)) {
-            // 创建JWT Token
-            String token = JwtUtils.generateToken(username);
+            loginUser = username;
+
+        // ✅ 新增 guest 用户（用于测试越权）
+        } else if ("guest".equals(username) && "guest123".equals(password)) {
+            loginUser = "guest";
+        }
+
+        if (loginUser != null) {
+            // 创建 JWT Token
+            String token = JwtUtils.generateToken(loginUser);
             Cookie cookie = new Cookie(COOKIE_NAME, token);
             cookie.setHttpOnly(true);
             cookie.setMaxAge(60 * 60 * 24);
             cookie.setPath("/");
             response.addCookie(cookie);
-            session.setAttribute("LoginUser", username);
+            session.setAttribute("LoginUser", loginUser);
 
             if (referer == null || referer.isEmpty() || referer.contains("/login") || referer.contains("/user/ldap") || referer.contains("/user/logout")) {
                 return "redirect:/index";
