@@ -20,4 +20,6 @@ services:
     depends_on:
       - db
     ports:
-      - "8888:8888"
+      - "8084:8888"
+    volumes:
+      - /home/xxx/Desktop/IAST_share/:/tmp/xxxagent/
