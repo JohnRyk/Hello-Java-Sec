@@ -60,6 +60,41 @@ mvn clean package -DskipTests
 java -jar target/javasec-x.x.jar
 ```
 
+> Maven source
+
+```
+vi ~/.m2/settings.xml
+```
+
+content:
+
+```
+<settings>
+  <mirrors>
+    <mirror>
+      <id>aliyun</id>
+      <mirrorOf>*</mirrorOf>
+      <name>aliyun maven</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+    </mirror>
+  </mirrors>
+</settings>
+```
+
+> Openjdk 11 (jdk8 not exists in Kali packages source)
+
+```
+sudo apt update
+sudo apt install openjdk-11-jdk -y
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+java -version
+cd Hello-Java-Sec
+mvn clean package -Dmaven.test.skip=true
+```
+
+
+
 ### Docker部署
 
 ```
